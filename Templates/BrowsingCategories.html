@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:style="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>LionAuction</title>
+
+    <div class = "row" style="background-color:#aaa;">
+        <h1>LionAuction</h1>
+    </div>
+</head>
+<body>
+    <div class="card-body">
+        <h2 class="card-title">Browse Auction Listings</h2>
+        <div class="form-group">
+                <label>Select the Category</label>
+                <select class="form-control" id="category" name="category" form="browsing" required class="form-control">
+                    <option>Choose Category</option>
+                    {% for category_name in categories %}
+                        <option value="{{ category_name[0] }}">{{ category_name[0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        <form action="/Browse" id = "browsing" method='POST'>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <!--<a class="btn btn-success" href="/" role="button">Go Back</a>-->
+        </form>
+        <table class="table table-light">
+            <tr>
+                <th scope="col"> Listing ID</th>
+                <th scope="col"> Category</th>
+                <th scope="col"> Auction Title</th>
+                <th scope="col"> Product Description</th>
+                <th scope="col"> Quantity</th>
+                <th scope="col"> Reserve Price</th>
+                <th scope="col"> Max Bids</th>
+                <th scope="col"> Remaining Bids</th>
+            </tr>
+            <tbody>
+            {% for Seller_Email,Listing_ID,Category,Auction_Title,Product_Name,Product_Description,Quantity,Reserve_Price,Max_bids,Status,Remaining_bids in result %}
+                <tr>
+                    <td> <a href="/BuyingAuctionListing/{{ Seller_Email }}/{{ Listing_ID }}">{{ Listing_ID }}</a></td>
+                    <td> {{ Category }}</td>
+                    <td> {{ Auction_Title }}</td>
+                    <td> {{ Product_Description }}</td>
+                    <td> {{ Quantity }}</td>
+                    <td> {{ Reserve_Price }}</td>
+                    <td> {{ Max_bids }}</td>
+                    <td> {{ Remaining_bids }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<style>
+    tr:hover {
+        background: gray;
+    }
+    tr td:first-child {
+  position:relative;
+}
+
+a:before {
+  content: '';
+  position:absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: block;
+  width: 400px;
+}
+</style>

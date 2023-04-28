@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>LionAuction</title>
+    <script type="text/javascript">
+
+    function clickMe(){
+    var text = document.getElementById("popup");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe1(){
+    var text = document.getElementById("popup1");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe2(){
+    var text = document.getElementById("popup2");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe3(){
+    var text = document.getElementById("popup3");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe4(){
+    var text = document.getElementById("popup4");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe5(){
+    var text = document.getElementById("popup5");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe6(){
+    var text = document.getElementById("popup6");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe7(){
+    var text = document.getElementById("popup7");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe8(){
+    var text = document.getElementById("popup8");
+    console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+    function clickMe9() {
+        var text = document.getElementById("popup9");
+        console.log(text.style.display);
+        if (text.style.display === "none") {
+            text.style.display = "block";
+        }
+    }
+
+    function copyContent() {
+      const table = [];
+      $("tr").each(function() {
+        const row = [];
+        $("td", this).each(function() {
+          row.push($(this).text());
+        });
+        table.push(row);
+      });
+
+  // return true to submit
+  return JSON.stringify(table);
+}
+
+    function edit(element){
+        var tr = jQuery(element).parent().parent();
+        if(!tr.hasClass("editing")) {
+            tr.addClass("editing");
+            tr.find("DIV.td").each(function(){
+                if(!jQuery(this).hasClass("action")){
+                    var value = jQuery(this).text();
+                    jQuery(this).text("");
+                    jQuery(this).append('<input type="text" value="'+value+'" />');
+                } else {
+                    jQuery(this).find("BUTTON").text("save");
+                }
+            });
+        } else {
+            tr.removeClass("editing");
+            tr.find("DIV.td").each(function(){
+                if(!jQuery(this).hasClass("action")){
+                    var value = jQuery(this).find("INPUT").val();
+                    jQuery(this).text(value);
+                    jQuery(this).find("INPUT").remove();
+                } else {
+                    jQuery(this).find("BUTTON").text("edit");
+                }
+            });
+        }
+    }
+    </script>
+    <link rel="stylesheet" href="../../Style.css">
+</head>
+<body>
+<!--<form action="/ShowBidderInfo" method='POST'></form>-->
+
+
+<form action="/ShowBidderInfo" method='GET'></form>
+
+
+        <div class="card-body">
+        <h2 class="card-title">Your Information</h2>
+            <table class="table table-dark">
+            <tr>
+                <th scope="col"> Email ID</th>
+                <th scope="col"> First Name</th>
+                <th scope="col"> Last Name</th>
+                <th scope="col"> Age</th>
+                <th scope="col"> Gender</th>
+                <th scope="col"> Major</th>
+            </tr>
+            <tbody>
+            {% for email, first_name, last_name, gender, age, major in result[0] %}
+                <tr>
+                    <td>{{ email }}</td>
+                    <td>{{ first_name }}</td>
+                    <td>{{ last_name }}</td>
+                    <td>{{ gender }}</td>
+                    <td>{{ age }}</td>
+                    <td>{{ major }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div class="card-body">
+        <table class="table table-dark">
+            <tr>
+                <th scope="col"> Street Number</th>
+                <th scope="col"> Street Name</th>
+                <th scope="col"> City</th>
+                <th scope="col"> State</th>
+                <th scope="col"> Zipcode</th>
+            </tr>
+            <tbody>
+                <tr>
+                    {% for street_name, street_num, zipcode in result[1]%}
+                        <td>{{ street_num }}</td>
+                        <td>{{ street_name }}</td>
+                    {% endfor %}
+                    {% for city, state, zipcode in result[2]%}
+                        <td>{{ city }}</td>
+                        <td>{{ state }}</td>
+                        <td>{{ zipcode }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-body">
+         <h2 class="card-title">Credit Card Information</h2>
+        <table class="table table-dark">
+            <thead>
+		        <tr>
+                    <th>Card Number</th>
+                    <th>Card Type</th>
+                    <th>Expiration Month</th>
+                    <th>Expiration Year</th>
+                    <th>Security Code</th>
+		        </tr>
+            </thead>
+            {% for card_num, card_type, expire_month, expire_year, security_code in result[3] %}
+            <tbody>
+                        <td> {{ card_num }}</td>
+                        <td> {{ card_type }} </td>
+                        <td> {{ expire_month }}</td>
+                        <td> {{ expire_year }}</td>
+                        <td> {{ security_code }}</td>
+            {% endfor %}
+            </tbody>
+        </table>
+            <a href="/">Go Back to Login </a>
+    </div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+
+<style>
+ #popup {
+    display: none;
+ }
+    h2 {
+        text-align: center;
+    }
+    label {
+        display: inline-block;
+        width: 100%;
+        text-align: left;
+    }
+    form {
+        margin: 10px;
+    }
+    .editbutton {
+        background-color: #343a40;
+        border: none;
+        color: #b0b0b0;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .editbutton:hover {
+        color: white;
+    }
+
+    .th {
+        display: table-cell;
+        vertical-align: inherit;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .tbody {
+        display: table-row-group;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+    .tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+
+
+
+</style>
